@@ -1,4 +1,4 @@
-package com.example.firstapp
+package com.example.firstapp    // Chemin où est situé notre MainActivity.kt
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
