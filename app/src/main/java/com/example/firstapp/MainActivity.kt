@@ -7,6 +7,9 @@ class MainActivity : AppCompatActivity() {
     /* La classe MainActivity hérite de la classe AppCompatActivity qui nous permet d'avoir toutes les fonctionnalités, les attributs qui ns permettent d'intéragir avec l'interface web (XML). */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+/*
+        setContentView(R.layout.auth_page_fb_constraint_layout)
+*/
+        setContentView(R.layout.auth_page_fb_linear_layout)
     }
 }
