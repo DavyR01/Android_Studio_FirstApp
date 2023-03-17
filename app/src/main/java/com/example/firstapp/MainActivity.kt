@@ -10,6 +10,10 @@ class MainActivity : AppCompatActivity() {
 /*
         setContentView(R.layout.auth_page_fb_constraint_layout)
 */
+/*
         setContentView(R.layout.auth_page_fb_linear_layout)
+*/
+        setContentView(R.layout.auth_page_fb_relative_layout)
+
     }
 }
