@@ -12,7 +12,7 @@
         android:id="@+id/logoFB"
         android:layout_width="307dp"
         android:layout_height="168dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
