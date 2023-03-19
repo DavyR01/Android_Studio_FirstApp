@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     /* La classe MainActivity hérite de la classe AppCompatActivity qui nous permet d'avoir toutes les fonctionnalités, les attributs qui ns permettent d'intéragir avec l'interface web (XML). */
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val connect = findViewById<Button>(R.id.connect)
         connect.setOnClickListener(View.OnClickListener { view: View ->
-            println("Hello, je suis le bouton connect")
+            Toast.makeText(this, "vous avez cliqué sur le bouton connect !", Toast.LENGTH_LONG).show()
         })
 /*        connect.setOnClickListener{
             println("Hello, je suis le bouton connect ${it.id} !!")
