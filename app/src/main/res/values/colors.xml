@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="fb_mainColor">#385899</color>
+    <color name="error">#FF6F6F</color>
 </resources>
 
 
