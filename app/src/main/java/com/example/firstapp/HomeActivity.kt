@@ -11,13 +11,17 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+/*
         val tvHello = findViewById<TextView>(R.id.tvHello)
+*/
 
         // 1. Récupérer l'email envoyé par l'activityMain
         val email = intent.getStringExtra("email")
 
         // 2. Afficher l'email dans le tvHello
+/*
         tvHello.text = "Bienvenue : $email"
+*/
 
     }
 }
