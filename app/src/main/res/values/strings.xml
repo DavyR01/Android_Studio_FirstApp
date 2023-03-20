@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android_studio_firstApp</string>
+    <string name="home_activity_title">Accueil</string>
 </resources>

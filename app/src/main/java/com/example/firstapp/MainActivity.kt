@@ -1,5 +1,6 @@
 package com.example.firstapp    // Chemin où est situé notre MainActivity.kt
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,12 +13,6 @@ class MainActivity : AppCompatActivity() {
     /* La classe MainActivity hérite de la classe AppCompatActivity qui nous permet d'avoir toutes les fonctionnalités, les attributs qui ns permettent d'intéragir avec l'interface web (XML). */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*
-        setContentView(R.layout.auth_page_fb_constraint_layout)
-*/
-/*
-        setContentView(R.layout.auth_page_fb_linear_layout)
-*/
         setContentView(R.layout.auth_page_fb_relative_layout)
 
         val connect = findViewById<Button>(R.id.connect)
@@ -40,9 +35,18 @@ class MainActivity : AppCompatActivity() {
                 val correctEmail = "davy@gmail.com"
                 val correctPassword = "azerty"
                 if (correctEmail == txtEmail && correctPassword == txtPassword) {
+                    email.setText("")
+                    password.setText("")
                     error.visibility = View.GONE
-                    Toast.makeText(this, "Bravo !! Vous pouvez accéder à notre application", Toast.LENGTH_SHORT)
-                        .show()
+                    // Intent Explicite
+                    Intent(this, HomeActivity::class.java).also {
+                        it.putExtra("email", txtEmail)
+                        startActivity(it)
+                    }
+/*                    val intentToHomeActivity: Intent = Intent(this, HomeActivity::class.java).also {
+                        intentToHomeActivity.putExtra("email", txtEmail)
+                        startActivity(intentToHomeActivity)
+                    }*/
                 } else {
                     error.text = "Email ou password n'est pas correct !"
                     error.visibility = View.VISIBLE
