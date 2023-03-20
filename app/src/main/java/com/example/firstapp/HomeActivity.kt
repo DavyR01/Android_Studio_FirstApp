@@ -20,8 +20,9 @@ class HomeActivity : AppCompatActivity() {
 
 
         val listPosts = findViewById<ListView>(R.id.listPosts)
-        val postsArray = listOf("Post 1", "Post 2", "Post 3", "Post 4", "Post 5")
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)
+        val postsArray = arrayListOf("Post 1", "Post 2", "Post 3", "Post 4", "Post 5")
+        val adapter = PostsAdapter(this, R.layout.item_post, postsArray)
+/*      val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)*/
         listPosts.adapter = adapter
 
 
