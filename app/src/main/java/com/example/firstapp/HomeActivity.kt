@@ -66,7 +66,7 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "App Configuration", Toast.LENGTH_SHORT).show()
             }
             R.id.itemLogout -> {
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
