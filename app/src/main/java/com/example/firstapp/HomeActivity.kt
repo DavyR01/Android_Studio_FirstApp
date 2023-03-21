@@ -1,11 +1,14 @@
 package com.example.firstapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 
 class HomeActivity : AppCompatActivity() {
 
@@ -25,13 +28,23 @@ class HomeActivity : AppCompatActivity() {
             Post("Post 2", "une deuxième description", R.drawable.image2),
             Post("Post 3", "une description 3 du post 3 qui sera inscrite là dessus !!!!!", R.drawable.image3),
             Post("Post 4", "une description 4 du post 4 qui sera également présente et affiché ici", R.drawable.image4),
-            Post("Post 5", "the last description du post 5 avec une description 5 !!!!", R.drawable.image5)
+            Post("Post 5", "the last description 5 du post 5 avec une description 5 !!!!", R.drawable.image5)
         )
         val adapter = PostsAdapter(this, R.layout.item_post, postsArray)
 /*      val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)*/
         listPosts.adapter = adapter
 
+        listPosts.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, id ->
+/*            Toast.makeText(this, "Position : $position", Toast.LENGTH_SHORT).show()*/
+            val clikedPost = postsArray[position]
+            Intent(this, PostsDetailsActivity::class.java).also {
+                it.putExtra("titre", clikedPost.titre)
+                startActivity(it)
+            }
+        })
 
+        // OnItemClickListener est une classe anonyme et n'est pas obligatoire
+        // setOnItemClickListener est une expression lambda.
         // 2. Afficher l'email dans le tvHello
 /*        tvHello.text = "Bienvenue : $email"*/
 

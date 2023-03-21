@@ -12,12 +12,15 @@
         android:theme="@style/Theme.FirstApp"
         tools:targetApi="31">
         <activity
+            android:name=".PostsDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"/>
+        <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/home_activity_title"
-            android:parentActivityName=".MainActivity" />
-        <!-- 'parentActivityName' : Permet d'ajouter la flèche de retour à partir de la HomeActivity-->
-        <!-- 'exported' : Attribut obligatoire au lancement du démarrage de l'appli -->
+            android:parentActivityName=".MainActivity" /> <!-- 'parentActivityName' : Permet d'ajouter la flèche de retour à partir de la HomeActivity -->
+            <!-- 'exported' : Attribut obligatoire au lancement du démarrage de l'appli, s'applique à la view que l'on veut afficher en 1er -->
         <activity
             android:name=".MainActivity"
             android:exported="true">

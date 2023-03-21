@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     email.setText("")
                     password.setText("")
                     error.visibility = View.GONE
-                    // Intent Explicite
+                    // Intent Explicite : Permet de naviguer entre plusieurs activity
                     Intent(this, HomeActivity::class.java).also {
                         it.putExtra("email", txtEmail)
                         startActivity(it)

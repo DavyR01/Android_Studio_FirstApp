@@ -3,19 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp">
 
     <ImageView
         android:id="@+id/imagePost"
         android:layout_width="114dp"
-        android:layout_height="119dp"
+        android:layout_height="134dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-<!--    tools:srcCompat="@tools:sample/avatars"  -->
-<!--    // tools est utilisé que dans le cas du preview contrairement à Android que l'appli est exécuté -->
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars"/>
+    <!--    centerCrop permet de calibrer les images uniformément en fonction du layout sans les déformer  -->
+
+    <!--    // tools est utilisé que dans le cas du preview contrairement à Android que l'appli est exécuté -->
 
     <TextView
         android:id="@+id/tvTitre"
@@ -36,7 +40,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="8dp"
-        tools:text="Un description au hasard qui va être remplacé prochnement !!!!!"
+        tools:text="Une description au hasard qui va être remplacé prochainement et...."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagePost"
         app:layout_constraintTop_toBottomOf="@+id/tvTitre" />
