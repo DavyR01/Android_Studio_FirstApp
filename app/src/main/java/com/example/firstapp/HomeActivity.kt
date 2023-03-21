@@ -19,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var listPosts: ListView // Variable déclaré en globale désormais pour pouvoir la réutiliser dans une autre méthode.
     var postsArray = ArrayList<Post>()
+    lateinit var adapter: PostsAdapter // les : permettent d'indiquer le type de la variable.
 
     // Méthode pour créer et afficher les 5 posts avec des descriptions, titre et images distincts.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
                 R.drawable.image5
             )
         )
-        val adapter = PostsAdapter(this, R.layout.item_post, postsArray)
+        adapter = PostsAdapter(this, R.layout.item_post, postsArray)
 /*      val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)*/
         listPosts.adapter = adapter
 
@@ -111,17 +112,26 @@ class HomeActivity : AppCompatActivity() {
     // Méthode pour créer une action lors du clique sur les contextes du menu (Afficher, Supprimer)
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info: AdapterContextMenuInfo = item.menuInfo as AdapterContextMenuInfo
-        val position: Int = info.position + 1
+        val position: Int = info.position
         when(item.itemId) {
             R.id.itemShow -> {
-                Toast.makeText(this, "Afficher le post numéro : $position", Toast.LENGTH_SHORT).show()
+                val clikedPost = postsArray[position]
+                Intent(this, PostsDetailsActivity::class.java ).also {
+                    it.putExtra("post", clikedPost.titre)
+                    startActivity(it)
+                }
             }
             R.id.itemDelete -> {
-                Toast.makeText(this, "Supprimer le post numéro : $position)", Toast.LENGTH_SHORT).show()
+                postsArray.removeAt(position)
+                adapter.notifyDataSetChanged()
             }
         }
         return super.onContextItemSelected(item)
     }
 
+/*    Intent(this, PostsDetailsActivity::class.java).also {
+        it.putExtra("titre", clikedPost.titre)
+        startActivity(it)
+    }*/
 
 }
