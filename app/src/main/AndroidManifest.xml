@@ -18,8 +18,9 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false"
-            android:label="@string/home_activity_title"
-            android:parentActivityName=".MainActivity" /> <!-- 'parentActivityName' : Permet d'ajouter la flèche de retour à partir de la HomeActivity -->
+            android:label="@string/home_activity_title"/>
+            <!--android:parentActivityName=".MainActivity" />--> <!-- 'parentActivityName' : Permet d'ajouter la flèche de retour à partir de la HomeActivity, va renvoyer sur la view activity_main
+            On l'enlève car dans une application, le retour à la page login se fait pas un bouton déconnecter et non par une flèche situé dans l'action bar -->
             <!-- 'exported' : Attribut obligatoire au lancement du démarrage de l'appli, s'applique à la view que l'on veut afficher en 1er -->
         <activity
             android:name=".MainActivity"

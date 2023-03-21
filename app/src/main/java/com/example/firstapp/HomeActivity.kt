@@ -3,6 +3,8 @@ package com.example.firstapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -48,5 +50,27 @@ class HomeActivity : AppCompatActivity() {
         // 2. Afficher l'email dans le tvHello
 /*        tvHello.text = "Bienvenue : $email"*/
 
+    } // fin onCreate
+
+    // Création méthode pour les options des menus
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.itemAdd -> {
+                Toast.makeText(this, "Add new post", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemConfig -> {
+                Toast.makeText(this, "App Configuration", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemLogout -> {
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }
