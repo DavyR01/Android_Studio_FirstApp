@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/itemShow"
-        android:title="Afficher" />
+        android:title="afficher" />
     <item
         android:id="@+id/itemDelete"
-        android:title="Supprimer" />
+        android:title="supprimer" />
 </menu>

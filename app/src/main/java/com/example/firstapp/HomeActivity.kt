@@ -9,10 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.AdapterContextMenuInfo
-import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 
 class HomeActivity : AppCompatActivity() {
@@ -35,22 +32,16 @@ class HomeActivity : AppCompatActivity() {
         listPosts = findViewById(R.id.listPosts)
         postsArray = arrayListOf(
             Post(
-                "Post 1",
-                "une description 1 du post 1 qui va être affiché ici",
-                R.drawable.image1
-            ),
-            Post("Post 2", "une deuxième description", R.drawable.image2),
-            Post(
+                "Post 1", "une description 1 du post 1 qui va être affiché ici", R.drawable.image1
+            ), Post("Post 2", "une deuxième description", R.drawable.image2), Post(
                 "Post 3",
                 "une description 3 du post 3 qui sera inscrite là dessus !!!!!",
                 R.drawable.image3
-            ),
-            Post(
+            ), Post(
                 "Post 4",
                 "une description 4 du post 4 qui sera également présente et affiché ici",
                 R.drawable.image4
-            ),
-            Post(
+            ), Post(
                 "Post 5",
                 "the last description 5 du post 5 avec une description 5 !!!!",
                 R.drawable.image5
@@ -74,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
         // 2. Afficher l'email dans le tvHello
 /*        tvHello.text = "Bienvenue : $email"*/
 
-        registerForContextMenu(listPosts)
+        registerForContextMenu(listPosts) // Permet d'afficher le context menu en laissant le clique dessus
     } // fin onCreate
 
     // Méthode pour créer et afficher les options des menus (Add, Config, Se déconnecter)
@@ -100,12 +91,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // Méthode pour créer et afficher le contextMenu lorsque l'on reste appuyer sur un post ...
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
+
+/*    override fun onCreateContextMenu(
+        menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?
     ) {
-        menuInflater.inflate(R.menu.list_context_menu, menu)
+        menuInflater.inflate(R.menu.list_popup_menu, menu)
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
@@ -113,11 +103,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info: AdapterContextMenuInfo = item.menuInfo as AdapterContextMenuInfo
         val position: Int = info.position
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.itemShow -> {
                 val clikedPost = postsArray[position]
-                Intent(this, PostsDetailsActivity::class.java ).also {
-                    it.putExtra("post", clikedPost.titre)
+                Intent(this, PostsDetailsActivity::class.java).also {
+                    it.putExtra("titre", clikedPost.titre)
                     startActivity(it)
                 }
             }
@@ -127,11 +117,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         return super.onContextItemSelected(item)
-    }
-
-/*    Intent(this, PostsDetailsActivity::class.java).also {
-        it.putExtra("titre", clikedPost.titre)
-        startActivity(it)
     }*/
 
 }

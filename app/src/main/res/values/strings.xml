@@ -2,4 +2,6 @@
     <string name="app_name">Android_studio_firstApp</string>
     <string name="home_activity_title">Accueil</string>
     <string name="post_details_activity_title">Post</string>
+    <string name="afficher">Afficher</string>
+    <string name="supprimer">Supprimer</string>
 </resources>
