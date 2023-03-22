@@ -1,16 +1,15 @@
 package com.example.firstapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.AdapterContextMenuInfo
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 class HomeActivity : AppCompatActivity() {
 
@@ -84,13 +83,35 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "App Configuration", Toast.LENGTH_SHORT).show()
             }
             R.id.itemLogout -> {
-                finish()
+                // Afficher un dialogue de confirmation
+                showLogoutConfirmDialog()
+                /*finish()*/
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    // Méthode pour créer et afficher le contextMenu lorsque l'on reste appuyer sur un post ...
+    // Méthode pour créer une fenêtre de dialogue de confirmation lors d'un clique sur 'Se déconnecter'
+    fun showLogoutConfirmDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmation !!")
+        builder.setMessage("Etes-vous sûr de vouloir quitter l'application ??")
+        builder.setPositiveButton("Oui") { dialogInterface: DialogInterface, id: Int ->
+            finish()
+        }
+        builder.setNegativeButton("Non"){ dialogInterface, id:Int ->
+            dialogInterface.dismiss()
+        }
+        builder.setNeutralButton("Annuler"){dialogInterface, id:Int ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+    }
+
+}
+
+// Méthode pour créer et afficher le contextMenu lorsque l'on reste appuyer sur un post ...
 
 /*    override fun onCreateContextMenu(
         menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?
@@ -119,4 +140,3 @@ class HomeActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }*/
 
-}
