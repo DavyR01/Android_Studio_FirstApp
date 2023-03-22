@@ -1,5 +1,6 @@
 package com.example.firstapp
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -97,12 +98,16 @@ class HomeActivity : AppCompatActivity() {
         builder.setTitle("Confirmation !!")
         builder.setMessage("Etes-vous sûr de vouloir quitter l'application ??")
         builder.setPositiveButton("Oui") { dialogInterface: DialogInterface, id: Int ->
+
+            val editor = getSharedPreferences("app_state", Context.MODE_PRIVATE).edit()
+            editor.remove("is_authentificated") // On pourrait l'écrire : 'editor.putBoolean()' afin de switcher le Boolean
+            editor.apply()
             finish()
         }
-        builder.setNegativeButton("Non"){ dialogInterface, id:Int ->
+        builder.setNegativeButton("Non") { dialogInterface, id: Int ->
             dialogInterface.dismiss()
         }
-        builder.setNeutralButton("Annuler"){dialogInterface, id:Int ->
+        builder.setNeutralButton("Annuler") { dialogInterface, id: Int ->
             dialogInterface.dismiss()
         }
         val alertDialog: AlertDialog = builder.create()

@@ -1,6 +1,8 @@
 package com.example.firstapp    // Chemin où est situé notre MainActivity.kt
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,14 +13,31 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     /* La classe MainActivity hérite de la classe AppCompatActivity qui nous permet d'avoir toutes les fonctionnalités, les attributs qui ns permettent d'intéragir avec l'interface web (XML). */
+
+    lateinit var sharedPreferences: SharedPreferences // Une variable non nul déclarée avec le mot clé lateinit lors de sa déclaration peut être initialisée plus tard partout dans votre code
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.auth_page_fb_relative_layout)
+
+        sharedPreferences = this.getSharedPreferences("app_state", Context.MODE_PRIVATE)
+
+        val isAutentificated = sharedPreferences.getBoolean("is_authentificated", false)
+        // Afin de vérifier la valeur du boolean is_authentificated, on va se rendre dans Device Manager et le chemin /data/data/com.example.firstapp/shared_prefs/app_state.xml
+        val emailSharedPreferences = sharedPreferences.getString("email", null)
+
+        if (isAutentificated) {              // On vérifie si l'utilisateur s'est déja connecté auparavant pour le diriger directement vers la homePage sans devoir rentrer de nouveau le identifiants
+            Intent(this, HomeActivity::class.java).also {
+                it.putExtra("email", emailSharedPreferences)
+                startActivity(it)
+            }
+        }
 
         val connect = findViewById<Button>(R.id.connect)
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         val error = findViewById<TextView>(R.id.error)
+
 
         connect.setOnClickListener {
 /*          println("Hello, je suis le bouton connect ${it.id} !!")*/
@@ -37,8 +56,16 @@ class MainActivity : AppCompatActivity() {
                 if (correctEmail == txtEmail && correctPassword == txtPassword) {
                     email.setText("")
                     password.setText("")
-                    error.visibility = View.GONE
-                    // Intent Explicite : Permet de naviguer entre plusieurs activity
+
+                    // Enregistrer dans sharedPreferences le boolean isAuthentificated
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("is_authentificated", true)
+                    editor.putString("email", txtEmail)
+                    editor.apply() // apply fonctionne en asynchrone, càd qu'il passera à l'étape suivant meme si l'instruction n'est pas traité entièrement contrairement à editor.commit()
+
+                    error.visibility =
+                        View.GONE    // Presque similaire à .INVISIBLE sauf que l'espace nécessaire à son affichage sera 'dismiss' lorsque l'erreur ne doit pas être affichée.
+                    // Intent Explicite : Permet de naviguer entre plusieurs activity : Intent dirige vers une nouvelle activity
                     Intent(this, HomeActivity::class.java).also {
                         it.putExtra("email", txtEmail)
                         startActivity(it)
