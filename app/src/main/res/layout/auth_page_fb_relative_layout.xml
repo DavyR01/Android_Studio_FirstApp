@@ -62,6 +62,7 @@
         app:backgroundTint="@color/white" />
 
     <TextView
+        android:id="@+id/createCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/connect"

@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 
-class PostsAdapter(
+class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doit lui passer des paramètres et ainsi créer le constructor
     var mContext: Context,
     var resource: Int,
     var values: ArrayList<Post>
