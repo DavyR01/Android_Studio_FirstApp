@@ -3,6 +3,7 @@ package com.example.firstapp.db;
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.firstapp.data.User
 
 // La création de la db se fait à l'appel du constructor SQLiteOpenHelper
 class FacebookDatabase(mContext: Context, /*name: String = DB_NAME, version: Int = DB_VERSION*/) : SQLiteOpenHelper(
@@ -31,6 +32,10 @@ class FacebookDatabase(mContext: Context, /*name: String = DB_NAME, version: Int
         onCreate(db)
 
         // re création des nouveaux
+    }
+
+    fun addUser(user: User): Boolean {
+        return false
     }
 
     /*    static String name = ""     */

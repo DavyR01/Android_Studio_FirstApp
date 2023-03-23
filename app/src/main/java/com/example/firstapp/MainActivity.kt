@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         val error = findViewById<TextView>(R.id.error)
+        val tvRegister = findViewById<TextView>(R.id.tvRegister)
 
 
         connect.setOnClickListener {
@@ -85,7 +86,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        tvRegister.setOnClickListener {
+            Intent(this, RegisterActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 }
 

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import com.example.firstapp.data.Post
 
 class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doit lui passer des paramètres et ainsi créer le constructor
     var mContext: Context,

@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.firstapp.data.Post
 
 class HomeActivity : AppCompatActivity() {
 
