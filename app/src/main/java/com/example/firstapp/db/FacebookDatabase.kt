@@ -1,5 +1,6 @@
 package com.example.firstapp.db;
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -35,7 +36,20 @@ class FacebookDatabase(mContext: Context, /*name: String = DB_NAME, version: Int
     }
 
     fun addUser(user: User): Boolean {
-        return false
+        // Insérer un nouvel utilisateur dans la db
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(NAME, user.name)
+        values.put(EMAIL, user.email)
+        values.put(PASSWORD, user.password)
+
+        // insert into users(nom, email, password) values(user.nom, user.email, user.password)
+        // les Key sont les noms des colonnes et les values sont les valeurs.
+        val result = db.insert(USERS_TABLE_NAME, null, values).toInt()
+
+        db.close()
+
+        return result != -1
     }
 
     /*    static String name = ""     */

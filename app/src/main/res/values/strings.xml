@@ -5,4 +5,7 @@
     <string name="afficher">Afficher</string>
     <string name="supprimer">Supprimer</string>
     <string name="register_activity_title">Créer un compte</string>
+    <string name="error_empty_fields">Créer un compte</string>
+    <string name="passwords_different">Les mots de passe sont différents</string>
+    <string name="success_register">Votre compte a été crée avec succès</string>
 </resources>
