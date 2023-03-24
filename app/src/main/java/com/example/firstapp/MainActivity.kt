@@ -56,9 +56,10 @@ class MainActivity : AppCompatActivity() {
                 error.text = "Vous devez remplir tous les champs"
                 error.visibility = View.VISIBLE
             } else {
-                val correctEmail = "davy@gmail.com"
-                val correctPassword = "azerty"
-                if (correctEmail == txtEmail && correctPassword == txtPassword) {
+                val user = db.findUser(txtEmail, txtPassword)
+                /*val correctEmail = "davy@gmail.com"
+                val correctPassword = "azerty"*/
+                if (user != null) {
                     email.setText("")
                     password.setText("")
 

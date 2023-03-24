@@ -52,6 +52,30 @@ class FacebookDatabase(mContext: Context, /*name: String = DB_NAME, version: Int
         return result != -1
     }
 
+    fun findUser(email: String, password: String) : User? {
+
+        val user: User? = null // Le ? indique que le user peut être null sinon il y aura une erreur, on le déclare à null au départ
+        val db = this.readableDatabase // Différent de writableDatabase, on cherche ici à savoir si le user et le mot de passe que l'on rentre existe bel et bien dans la db
+        val selectionArgs = arrayOf(email, password)
+        val cursor = db.query(USERS_TABLE_NAME, null, "$EMAIL=? AND $PASSWORD=?", selectionArgs, null, null, null)
+        if (cursor != null) {             // si on trouve un utilisateur, on return le user sinon on retourne un user null à la fin avec db.close()
+            if(cursor.moveToFirst()) {
+                val id = cursor.getInt(0)
+                val name = cursor.getString(1)
+                val email = cursor.getString(2)
+                val user = User(id, name, email, "")
+                return user
+            }
+        }
+        db.close()
+        return user
+
+
+        /*val selectQuery = "SELECT * FROM $USERS_TABLE_NAME WHERE $EMAIL=?, $PASSWORD=?"
+        db.rawQuery(selectQuery, arrayOf(email, password))*/
+
+    }
+
     /*    static String name = ""     */
     companion object {
         private val DB_NAME = "facebook_db"

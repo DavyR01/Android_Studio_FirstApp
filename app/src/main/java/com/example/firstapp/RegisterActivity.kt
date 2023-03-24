@@ -51,10 +51,11 @@ class RegisterActivity : AppCompatActivity() {
                     val isInserted = db.addUser(user)
                     if (isInserted) {
                         Toast.makeText(this, getString(R.string.success_register), Toast.LENGTH_SHORT).show()
-                        Intent(this, HomeActivity::class.java).also {
+                        Intent(this, MainActivity::class.java).also {
                             it.putExtra("email", email)
                             startActivity(it)
                         }
+                        finish() // Permet de revenir à la page de connexion (auth_page) lorsque l'on se déconnecte juste après s'être inscrit afin d'éviter de revenir sur la page d'inscription
                     }
                 }
             }
