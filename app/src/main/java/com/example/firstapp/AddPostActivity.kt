@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import java.net.URI
 
 class AddPostActivity : AppCompatActivity() {
@@ -29,13 +30,22 @@ class AddPostActivity : AppCompatActivity() {
         editDescription = findViewById(R.id.editDescription)
         imagePost = findViewById(R.id.imagePost)
 
-        // Insertion d'une image lors de l'ajout d'un post, ne pas oublier de mettre imagePost en mode Tools(mode Préview) et non Android car sinon l'image téléchargé ne s'affichera pas correctement.
+        val galleryLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { data ->
+
+                val inputStream =
+                    contentResolver.openInputStream(data!!) // fichier de retour inputStream, on le lit à travers le contentResolver, et il va ouvrir un menu InputStream, les !! permettent de décapsuler l'uri qui peut être null.
+                val bitmap =
+                    BitmapFactory.decodeStream(inputStream) // On a besoin de décoder cette image, ce stream en bitmap.
+                imagePost.setImageBitmap(bitmap) // On appelle notre image en faisant passer le bitmap
+            }
+
+        // Insertion d'une image lors de l'ajout d'un post, ne pas oublier de mettre imagePost en mode Tools(mode Preview) et non Android car sinon l'image téléchargé ne s'affichera pas correctement.
 
         imagePost.setOnClickListener {
             // Ouvrir gallery : On va utiliser un Intent implicite, càd que l'on va être dirigé en dehors de l'application elle-même.
-            val intentImg = Intent(Intent.ACTION_GET_CONTENT)
-            intentImg.type = "image/*"
-            startActivityForResult(intentImg, 100) // startActivityForResult et non startActivity car on a besoin d'un résultat une fois que l'on a sélectionné notre image (code de retour/requete:100 par exemple).
+            // Ouvrir gallery
+            galleryLauncher.launch("image/*")
         }
 
         btnSave.setOnClickListener {
@@ -43,8 +53,20 @@ class AddPostActivity : AppCompatActivity() {
             // TODO : Enregistrer dans la base de données le post avec l'image !
         }
     }
+}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+// Ancienne configuration avec utilisation de 'startActivityForResult' de l'insertion d'image mais qui est déprécié par android studio.
+// On utilisera donc un galleryLauncher
+
+/*    imagePost.setOnClickListener {
+        // Ouvrir gallery : On va utiliser un Intent implicite, càd que l'on va être dirigé en dehors de l'application elle-même.
+        val intentImg = Intent(Intent.ACTION_GET_CONTENT)
+        intentImg.type = "image/*"
+        startActivityForResult(intentImg, 100) // startActivityForResult et non startActivity car on a besoin d'un résultat une fois que l'on a sélectionné notre image (code de retour/requete:100 par exemple).
+    }*/
+
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 100 && resultCode == RESULT_OK) {
@@ -54,6 +76,4 @@ class AddPostActivity : AppCompatActivity() {
             val bitmap = BitmapFactory.decodeStream(inputStream) // On a besoin de décoder cette image, ce stream en bitmap.
             imagePost.setImageBitmap(bitmap) // On appelle notre image en faisant passer le bitmap
         }
-    }
-
-}
+    }*/
