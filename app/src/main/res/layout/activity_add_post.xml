@@ -21,16 +21,19 @@
 
     <ImageView
         android:id="@+id/imagePost"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="200dp"
         android:layout_marginTop="24dp"
-        android:scaleType="fitXY"
-        android:tint="@android:color/darker_gray"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@android:drawable/ic_menu_set_as"
+        tools:tint="@android:color/darker_gray" />
+        <!-- centerCrop permet de ne   pas déformer l image-->
+        <!-- Ne pas appliquer de tint sur l'image sinon lors du téléchargement d'une image, elle ne s'affichera pas correctement -->
+        <!-- Télécharger une image en dessous de 5Mo -->
 
     <EditText
         android:id="@+id/editTitle"

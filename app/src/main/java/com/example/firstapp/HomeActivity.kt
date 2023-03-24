@@ -79,7 +79,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.itemAdd -> {
-                Toast.makeText(this, "Add new post", Toast.LENGTH_SHORT).show()
+                Intent(this, AddPostActivity::class.java).also {
+                    startActivity(it)
+                }
             }
             R.id.itemConfig -> {
                 Toast.makeText(this, "App Configuration", Toast.LENGTH_SHORT).show()
