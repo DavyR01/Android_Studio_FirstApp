@@ -28,7 +28,7 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
 
         tvTitre.text = post.titre
         tvDescription.text = post.description
-        imagePost.setImageResource(post.image)
+//        imagePost.setImageResource(post.image)
 
         imageShowPopup.setOnClickListener {
             val popupMenu = PopupMenu(mContext, imageShowPopup)

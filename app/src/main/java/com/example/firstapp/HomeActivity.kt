@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         listPosts = findViewById(R.id.listPosts)
-        postsArray = arrayListOf(
+/*        postsArray = arrayListOf(
             Post(
                 "Post 1", "une description 1 du post 1 qui va être affiché ici", R.drawable.image1
             ), Post("Post 2", "une deuxième description", R.drawable.image2), Post(
@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
                 "the last description 5 du post 5 avec une description 5 !!!!",
                 R.drawable.image5
             )
-        )
+        )*/
         adapter = PostsAdapter(this, R.layout.item_post, postsArray)
 /*      val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)*/
         listPosts.adapter = adapter
