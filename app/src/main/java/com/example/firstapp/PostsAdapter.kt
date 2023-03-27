@@ -23,6 +23,7 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
 ) : ArrayAdapter<Post>(mContext, resource, values) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
+        // référencement et déclaration des variables.
         val post = values[position] //         val post = values.get(position)
         val itemView = LayoutInflater.from(mContext).inflate(resource, parent, false)
         // LayoutInflater est un convertisseur d'XML en view
@@ -30,12 +31,16 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
         val tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
         val imagePost = itemView.findViewById<ImageView>(R.id.imagePost)
         val imageShowPopup = itemView.findViewById<ImageView>(R.id.imageShowPopup)
+        val tvLikes = itemView.findViewById<TextView>(R.id.tvLikes)
 
         tvTitre.text = post.titre
         tvDescription.text = post.description
         val bitmap = getBitmap(post.image)
 //        imagePost.setImageResource(post.image) // Ce n'est plus une imageResource mais un BitArray à présent
         imagePost.setImageBitmap(bitmap)
+        tvLikes.text = "${post.jaime} j'aime" // Concaténation de 2 strings, on aurait pu écrire : tvLikes.text = post.jaime.toString() + "j'aime"
+
+        val db = FacebookDatabase(mContext)
 
         imageShowPopup.setOnClickListener {
             val popupMenu = PopupMenu(mContext, imageShowPopup)
@@ -51,7 +56,6 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
                         }
                     }
                     R.id.itemDelete -> {
-                        val db = FacebookDatabase(mContext)
                         val resultDelete = db.deletePost(post.id)
                         if (resultDelete){
                             values.removeAt(position)
@@ -65,6 +69,16 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
             }
             popupMenu.show()
         }
+
+        tvLikes.setOnClickListener {
+            // TODO: Incrémenter le compteur de j'aimes"
+            db.incrementLikes(post)
+
+            val incrementedLikes = post.jaime+1
+            tvLikes.text = "${incrementedLikes} j'aime"   // Permet de MAJ les likes sans devoir rafraichir la page
+
+        }
+
         return itemView
     }
 

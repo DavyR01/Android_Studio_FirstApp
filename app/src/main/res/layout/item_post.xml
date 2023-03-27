@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitre" />
 
     <TextView
-        android:id="@+id/button"
+        android:id="@+id/tvLikes"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
@@ -71,7 +71,7 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/tvLikes"
         app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
     <ImageView

@@ -71,6 +71,7 @@ class AddPostActivity : AppCompatActivity() {
             bitmap = null
 
             finish()    // finish () permet de diriger directement vers l'activity précédente, càd HomeActivity
+            // Lorsque l'on a finit d'ajouter un post, on sera redirigé vers la HomeActivity et pour que la page se mette à jour correctement, on va créer un fonction onResume (HomeActivity), on ne repassera donc pas par onCreate. C'est tout un cycle de vie d'une activity. Grossomodo, on commence par onCreate, après onResume puis onStart...
         }
     } // fin onCreate
 

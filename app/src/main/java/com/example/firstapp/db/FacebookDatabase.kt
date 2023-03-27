@@ -30,7 +30,8 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
                     $POST_ID integer PRIMARY KEY,
                     $TITLE varchar(100),
                     $DESCRIPTION text,
-                    $IMAGE blob  --format blob-->
+                    $IMAGE blob,  --format blob-->
+                    $LIKES integer
                 )
                 
             """.trimIndent()
@@ -57,6 +58,7 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         return result != -1
     }
 
+    // Lors d'un constat de changement de version, le programme va constater une différence entre la oldVersion et la newVersion, il va donc appeler onUpgrade. C'est pour cela qu'il est important de changer de version lorsque l'on fait une modification de structure de la database.
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         // Suppression des anciennes tables et re création des nouveaux
         db?.execSQL("DROP TABLE IF EXISTS $USERS_TABLE_NAME")
@@ -101,7 +103,8 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
                     val titre = cursor.getString(cursor.getColumnIndexOrThrow(TITLE))
                     val description = cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION))
                     val image = cursor.getBlob(cursor.getColumnIndexOrThrow(IMAGE))
-                    val post = Post(id, titre, description, image)
+                    val likes = cursor.getInt(cursor.getColumnIndexOrThrow(LIKES))
+                    val post = Post(id, titre, description, image, likes)
                     posts.add(post)
                 } while (cursor.moveToNext())
             }
@@ -118,6 +121,7 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         values.put(TITLE, post.titre)
         values.put(DESCRIPTION, post.description)
         values.put(IMAGE, post.image)
+        values.put(LIKES, 0)
         // Se référer au constructeur de la class Post dans dossier data
 
         val result = db.insert(POSTS_TABLE_NAME, null, values)
@@ -135,10 +139,22 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         return rowDeleted > 0 // ou = 1
     }
 
+    fun incrementLikes(post: Post) {
+        val db = this.writableDatabase
+
+        val newLikesCount = post.jaime+1;
+        val values = ContentValues()
+        values.put(LIKES, post.jaime)
+
+
+        db.update(POSTS_TABLE_NAME, values, "id=?", arrayOf("${post.id}"))
+        db.close()
+    }
+
     /*    static String name = ""     */
     companion object {
         private val DB_NAME = "facebook_db"
-        private val DB_VERSION = 2
+        private val DB_VERSION = 3
 
         // table users
         private val USERS_TABLE_NAME = "users"
@@ -153,5 +169,6 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         private val TITLE = "title"
         private val DESCRIPTION = "description"
         private val IMAGE = "image"
+        private val LIKES = "jaime"
     }
 }

@@ -37,6 +37,12 @@ class HomeActivity : AppCompatActivity() {
 
 
         listPosts = findViewById(R.id.listPosts)
+
+    } // fin onCreate
+
+    override fun onResume() {
+        super.onResume()
+
         postsArray = db.findPosts()
 /*        postsArray = arrayListOf(
             Post(
@@ -73,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
 /*        tvHello.text = "Bienvenue : $email"*/
 
         registerForContextMenu(listPosts) // Permet d'afficher le context menu en laissant le clique dessus
-    } // fin onCreate
+    }
 
     // Méthode pour créer et afficher les options des menus (Add, Config, Se déconnecter)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

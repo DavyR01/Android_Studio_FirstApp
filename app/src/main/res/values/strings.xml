@@ -8,4 +8,5 @@
     <string name="error_empty_fields">Tous les champs sont obligatoires</string>
     <string name="passwords_different">Les mots de passe sont différents</string>
     <string name="success_register">Votre compte a été crée avec succès</string>
+    <string name="add_post_activity_title">Ajouter une publication</string>
 </resources>

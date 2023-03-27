@@ -13,7 +13,9 @@
         tools:targetApi="31">
         <activity
             android:name=".AddPostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/add_post_activity_title"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
