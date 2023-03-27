@@ -28,7 +28,7 @@ class AddPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
 
-        db = FacebookDatabase(this) // On instancie la db situé dans FacebookDatabase en passant le context this de notre activity.
+        db = FacebookDatabase(this) // On instancie la db situé dans FacebookDatabase en passant le context this de notre activity. On initialise la db
 
         btnSave = findViewById(R.id.btnSave)
         editTitle = findViewById(R.id.editTitle)
@@ -74,6 +74,8 @@ class AddPostActivity : AppCompatActivity() {
         }
     } // fin onCreate
 
+    // Fonction getBytes : Conversion image bitmap -> ByteArray pour être traité par la database lors d'un POST
+    // Conversion image ByteArray -> bitmap lorsque l'on voudra l'afficher lors d'un GET
     fun getBytes(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream)

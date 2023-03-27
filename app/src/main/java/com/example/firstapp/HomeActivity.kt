@@ -12,12 +12,15 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.firstapp.data.Post
+import com.example.firstapp.db.FacebookDatabase
 
 class HomeActivity : AppCompatActivity() {
 
     lateinit var listPosts: ListView // Variable déclaré en globale désormais pour pouvoir la réutiliser dans une autre méthode.
     var postsArray = ArrayList<Post>()
     lateinit var adapter: PostsAdapter // les : permettent d'indiquer le type de la variable.
+
+    lateinit var db: FacebookDatabase
 
     // Méthode pour créer et afficher les 5 posts avec des descriptions, titre et images distincts.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +29,14 @@ class HomeActivity : AppCompatActivity() {
 
 /*        val tvHello = findViewById<TextView>(R.id.tvHello)*/
 
+        db = FacebookDatabase(this)
+
         // 1. Récupérer l'email envoyé par l'activityMain
         val email = intent.getStringExtra("email")
 
 
         listPosts = findViewById(R.id.listPosts)
+        postsArray = db.findPosts()
 /*        postsArray = arrayListOf(
             Post(
                 "Post 1", "une description 1 du post 1 qui va être affiché ici", R.drawable.image1

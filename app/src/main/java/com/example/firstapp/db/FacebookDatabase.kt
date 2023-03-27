@@ -39,13 +39,6 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         db?.execSQL(createTablePosts)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // Suppression des anciennes tables et re création des nouveaux
-        db?.execSQL("DROP TABLE IF EXISTS $USERS_TABLE_NAME")
-        db?.execSQL("DROP TABLE IF EXISTS $POSTS_TABLE_NAME")
-        onCreate(db)
-    }
-
     fun addUser(user: User): Boolean {
         // Insérer un nouvel utilisateur dans la db
         val db = this.writableDatabase
@@ -56,23 +49,30 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
 
         // insert into users(nom, email, password) values(user.nom, user.email, user.password)
         // les Key sont les noms des colonnes et les values sont les valeurs.
-        val result = db.insert(USERS_TABLE_NAME, null, values).toInt() // On convertit le format LONG retourné par insert en INT
+        val result = db.insert(USERS_TABLE_NAME, null, values)
+            .toInt() // On convertit le format LONG retourné par insert en INT
 
         db.close()
 
         return result != -1
     }
 
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        // Suppression des anciennes tables et re création des nouveaux
+        db?.execSQL("DROP TABLE IF EXISTS $USERS_TABLE_NAME")
+        db?.execSQL("DROP TABLE IF EXISTS $POSTS_TABLE_NAME")
+        onCreate(db)
+    }
+
     fun findUser(email: String, password: String): User? {
 
-        val user: User? =
-            null // Le ? indique que le user peut être null sinon il y aura une erreur, on le déclare à null au départ
-        val db =
-            this.readableDatabase // Différent de writableDatabase, on cherche ici à savoir si le user et le mot de passe que l'on rentre existe bel et bien dans la db
+        val user: User? = null // Le ? indique que le user peut être null sinon il y aura une erreur, on le déclare à null au départ
+        val db = this.readableDatabase // Différent de writableDatabase, on cherche ici à savoir si le user et le mot de passe que l'on rentre existe bel et bien dans la db
         val selectionArgs = arrayOf(email, password)
-        val cursor = db.query(
-            USERS_TABLE_NAME, null, "$EMAIL=? AND $PASSWORD=?", selectionArgs, null, null, null
+        val cursor = db.query(USERS_TABLE_NAME, null, "$EMAIL=? AND $PASSWORD=?", selectionArgs, null, null, null
         )
+        /*val selectQuery = "SELECT * FROM $USERS_TABLE_NAME WHERE $EMAIL=?, $PASSWORD=?"
+        db.rawQuery(selectQuery, arrayOf(email, password))*/
         if (cursor != null) {             // si on trouve un utilisateur, on return le user sinon on retourne un user null à la fin avec db.close()
             if (cursor.moveToFirst()) {
                 val id = cursor.getInt(0)
@@ -85,10 +85,30 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         db.close()
         return user
 
+    }
 
-        /*val selectQuery = "SELECT * FROM $USERS_TABLE_NAME WHERE $EMAIL=?, $PASSWORD=?"
-        db.rawQuery(selectQuery, arrayOf(email, password))*/
+    fun findPosts(): ArrayList<Post> {
+        val posts = ArrayList<Post>()
+        val db = readableDatabase
+        val selectQuery = "SELECT * FROM $POSTS_TABLE_NAME"
 
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor != null) {
+            // parcours des différents éléments/enregistrements si il y en a grâce à une boucle pour pouvoir ensuite les afficher. Pour le findUser au dessus, on n'avait pas besoin de boucle car on voulait afficher que le 1er élément en question alors que dans ce cas, on souhaite afficher tous les enregistrements.
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getInt(cursor.getColumnIndexOrThrow(POST_ID))
+                    val titre = cursor.getString(cursor.getColumnIndexOrThrow(TITLE))
+                    val description = cursor.getString(cursor.getColumnIndexOrThrow(DESCRIPTION))
+                    val image = cursor.getBlob(cursor.getColumnIndexOrThrow(IMAGE))
+                    val post = Post(id, titre, description, image)
+                    posts.add(post)
+                } while (cursor.moveToNext())
+            }
+        }
+
+        db.close()
+        return posts
     }
 
     fun addPost(post: Post): Boolean {
@@ -122,7 +142,7 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         // table posts
         private val POSTS_TABLE_NAME = "posts"
         private val POST_ID = "id"
-        private val TITLE = " title"
+        private val TITLE = "title"
         private val DESCRIPTION = "description"
         private val IMAGE = "image"
     }

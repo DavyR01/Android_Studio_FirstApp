@@ -2,6 +2,8 @@ package com.example.firstapp
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +30,9 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
 
         tvTitre.text = post.titre
         tvDescription.text = post.description
-//        imagePost.setImageResource(post.image)
+        val bitmap = getBitmap(post.image)
+//        imagePost.setImageResource(post.image) // Ce n'est plus une imageResource mais un BitArray à présent
+        imagePost.setImageBitmap(bitmap)
 
         imageShowPopup.setOnClickListener {
             val popupMenu = PopupMenu(mContext, imageShowPopup)
@@ -53,5 +57,11 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
             popupMenu.show()
         }
         return itemView
+    }
+
+    // Fonction getBitmap : Conversion image ByteArray -> Bitmap pour pouvoir être affiché lors d'un GET
+    fun getBitmap(byteArray: ByteArray): Bitmap {
+        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        return bitmap
     }
 }
