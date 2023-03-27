@@ -142,9 +142,10 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
     fun incrementLikes(post: Post) {
         val db = this.writableDatabase
 
+        // TODO : A VOIR
         val newLikesCount = post.jaime+1;
         val values = ContentValues()
-        values.put(LIKES, post.jaime)
+        values.put(LIKES, newLikesCount)
 
 
         db.update(POSTS_TABLE_NAME, values, "id=?", arrayOf("${post.id}"))
