@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import com.example.firstapp.data.Post
+import com.example.firstapp.db.FacebookDatabase
 
 class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doit lui passer des paramètres et ainsi créer le constructor
     var mContext: Context,
@@ -23,6 +25,7 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
 
         val post = values[position] //         val post = values.get(position)
         val itemView = LayoutInflater.from(mContext).inflate(resource, parent, false)
+        // LayoutInflater est un convertisseur d'XML en view
         val tvTitre = itemView.findViewById<TextView>(R.id.tvTitre)
         val tvDescription = itemView.findViewById<TextView>(R.id.tvDescription)
         val imagePost = itemView.findViewById<ImageView>(R.id.imagePost)
@@ -48,8 +51,14 @@ class PostsAdapter( // Cette classe hérite de ArrayAdapter et pour cela, on doi
                         }
                     }
                     R.id.itemDelete -> {
-                        values.removeAt(position)
-                        notifyDataSetChanged()
+                        val db = FacebookDatabase(mContext)
+                        val resultDelete = db.deletePost(post.id)
+                        if (resultDelete){
+                            values.removeAt(position)
+                            notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(mContext, "Erreur de suppression", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 true

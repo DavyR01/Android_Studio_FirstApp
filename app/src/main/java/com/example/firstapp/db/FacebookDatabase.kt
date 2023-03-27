@@ -16,24 +16,24 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         // Création des tables de la db
         // les 3 guillemets permettent d écrire une chaine de caractères sans obligation de devoir préciser à chaque fois les retours à la ligne...
         val createTableUser = """                        
-            CREATE TABLE $USERS_TABLE_NAME(
-                $USER_ID integer PRIMARY KEY,
-                $NAME varchar(50),
-                $EMAIL varchar(100),
-                $PASSWORD varchar(20)                       
-            )
-            
-        """.trimIndent()
+                CREATE TABLE $USERS_TABLE_NAME(
+                    $USER_ID integer PRIMARY KEY,
+                    $NAME varchar(50),
+                    $EMAIL varchar(100),
+                    $PASSWORD varchar(20)                       
+                )
+                
+            """.trimIndent()
 
         val createTablePosts = """
-            CREATE TABLE $POSTS_TABLE_NAME(
-                $POST_ID integer PRIMARY KEY,
-                $TITLE varchar(100),
-                $DESCRIPTION text,
-                $IMAGE blob  --format blob-->
-            )
-            
-        """.trimIndent()
+                CREATE TABLE $POSTS_TABLE_NAME(
+                    $POST_ID integer PRIMARY KEY,
+                    $TITLE varchar(100),
+                    $DESCRIPTION text,
+                    $IMAGE blob  --format blob-->
+                )
+                
+            """.trimIndent()
 
         db?.execSQL(createTableUser) // on inscrit un point d'interrogation pour indiquer que la db peut être nulle.
         db?.execSQL(createTablePosts)
@@ -125,6 +125,14 @@ class FacebookDatabase(mContext: Context /*name: String = DB_NAME, version: Int 
         db.close()
 
         return result != -1L  // Au lieu de mettre toInt() comme dans fun addUser, on écrit un L pour indiquer que l'on va traiter et comparer avec un format LONG.
+    }
+
+    fun deletePost(id: Int) : Boolean{
+        val db = writableDatabase
+
+        val rowDeleted = db.delete(POSTS_TABLE_NAME, "id=?", arrayOf(id.toString()))
+
+        return rowDeleted > 0 // ou = 1
     }
 
     /*    static String name = ""     */

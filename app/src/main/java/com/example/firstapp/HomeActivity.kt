@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -54,10 +55,9 @@ class HomeActivity : AppCompatActivity() {
                 R.drawable.image5
             )
         )*/
-        adapter = PostsAdapter(this, R.layout.item_post, postsArray)
+        adapter = PostsAdapter(this, R.layout.item_post, postsArray) // on crée notre classe PostsAdapter de type ArrayAdapter, qui hérite de ArrayAdapter.
 /*      val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, postsArray)*/
         listPosts.adapter = adapter
-
         listPosts.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, id ->
 /*            Toast.makeText(this, "Position : $position", Toast.LENGTH_SHORT).show()*/
             val clikedPost = postsArray[position]
